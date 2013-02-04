@@ -23,7 +23,7 @@ INSTALL = install -m 644
 includedir ?= /usr/include
 libdir ?= /usr/lib
 CFLAGS += -I$(UMP_DIR)/include -I$(UMP_DIR)/include/ump -Wall -march=armv7-a -mthumb-interwork -fno-strict-aliasing -fPIC -Wno-strict-aliasing -Wno-long-long -O3
-
+LDFLAGS += -Wl,--no-as-needed -lGL
 include ump.mak
 
 %.o: %.c
@@ -32,7 +32,7 @@ include ump.mak
 UMP_OBJS := $(UMP_SRCS:.c=.o)
 
 libUMP.so: $(UMP_OBJS)
-	$(TARGET_CC) -shared -o $@ $(UMP_OBJS) $(CFLAGS)
+	$(TARGET_CC) -shared -o $@ $(UMP_OBJS) $(CFLAGS) $(LDFLAGS)
 libUMP.a: $(UMP_OBJS)
 	$(TARGET_AR) rcs $@ $(UMP_OBJS)
 
